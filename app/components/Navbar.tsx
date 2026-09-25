@@ -7,9 +7,7 @@ export function Navbar() {
       <div className="container nav-inner">
         <NavLink to="/" className="brand">
           <Music4 size={24} />
-          <span>
-            Trumpet<span className="gold-text">Trainer</span>
-          </span>
+          <span>Trumpo</span>
         </NavLink>
         <div className="nav-links">
           <NavLink

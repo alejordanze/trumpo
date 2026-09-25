@@ -1,87 +1,104 @@
-# Welcome to React Router!
+# Trumpo
 
-A modern, production-ready template for building full-stack React applications using React Router.
+Trumpo is an interactive introduction to the trumpet. It is a project
+about sharing my passion for the instrument and making the first steps feel
+more approachable: anyone can learn a little about how the trumpet works,
+practice basic fingerings, and make a few notes directly in the browser.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+## What you can do
 
-## Features
+- Explore an interactive 3D trumpet.
+- Play synthesized notes with the on-screen valves or the `1`, `2`, and `3`
+  keys.
+- Hold the blow control (or the spacebar) to sustain a note and hear the
+  fingering change as you play.
+- Choose from several scales and move between octaves.
+- Follow lessons covering the trumpet’s parts, posture, mouthpiece,
+  embouchure, breathing, first notes, and practice habits.
+- Use the fingering guide to connect each note with its valve combination.
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+The browser instrument is a practice and learning aid, not a replacement for
+playing a real trumpet. The goal is to make music education more inviting and
+give beginners a friendly place to start.
 
-## Getting Started
+## Run the project locally
+
+### Prerequisites
+
+- Node.js 20 or newer
+- npm
 
 ### Installation
 
-Install the dependencies:
+Clone the repository, move into the project directory, and install the
+dependencies:
 
 ```bash
+git clone <repository-url>
+cd trumpo
 npm install
 ```
 
-### Development
+### Development server
 
-Start the development server with HMR:
+Start the local development server with hot module replacement:
 
 ```bash
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+Open [http://localhost:5173](http://localhost:5173) in your browser. Audio is
+enabled after the first interaction with the playable trumpet, as required by
+modern browsers.
 
-## Building for Production
+### Production build
 
-Create a production build:
+Create and serve a production build locally:
 
 ```bash
 npm run build
+npm run start
 ```
 
-## Deployment
+### Available scripts
 
-### Docker Deployment
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Start the development server. |
+| `npm run build` | Build the application for production. |
+| `npm run start` | Serve the production build. |
+| `npm run typecheck` | Generate React Router types and run TypeScript checks. |
 
-To build and run using Docker:
+## Technologies
 
-```bash
-docker build -t my-app .
+- **React 19** for the component-based user interface.
+- **React Router 7** for routing and server-side rendering.
+- **TypeScript** for typed application code.
+- **Vite** for development and bundling.
+- **Tailwind CSS 4** alongside custom CSS for styling and design tokens.
+- **Three.js**, **React Three Fiber**, and **Drei** for the interactive 3D
+  trumpet and scene effects.
+- **Web Audio API** for the browser-based synthesized trumpet sound.
+- **Framer Motion** for lesson-page animations.
+- **Lucide React** for interface icons.
 
-# Run the container
-docker run -p 3000:3000 my-app
+## Project structure
+
+```text
+app/
+├── components/   # Shared UI and interactive trumpet components
+├── lib/          # Audio synthesis and musical note/fingering data
+├── routes/       # Home page and lesson content
+├── app.css       # Global styles and design tokens
+└── root.tsx      # Application shell and document layout
 ```
 
-The containerized application can be deployed to any platform that supports Docker, including:
+## Contributing
 
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
+Suggestions, corrections, and improvements to the learning experience are
+welcome. If you find an issue or have an idea that could help someone learn
+the trumpet more easily, please open an issue or submit a pull request.
 
-### DIY Deployment
+## License
 
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+No license has been selected for this project yet.

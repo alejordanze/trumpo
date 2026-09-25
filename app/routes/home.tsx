@@ -7,7 +7,7 @@ import { PlayableTrumpet, FingeringGuide } from "~/components/PlayableTrumpet";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "TrumpetTrainer — Learn to play the trumpet" },
+    { title: "Trumpo — Learn to play the trumpet" },
     {
       name: "description",
       content:
