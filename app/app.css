@@ -173,6 +173,11 @@ h3 {
   align-items: center;
   gap: 8px;
 }
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
 .nav-link {
   padding: 9px 16px;
   border-radius: 999px;
@@ -188,6 +193,52 @@ h3 {
 .nav-link.active {
   color: var(--gold-bright);
   background: rgba(245, 197, 66, 0.1);
+}
+.notation-switch {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+.notation-label {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+}
+.notation-options {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--bg);
+}
+.notation-options button {
+  border: 0;
+  border-radius: 999px;
+  padding: 5px 8px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    background 0.15s ease;
+}
+.notation-options button:hover {
+  color: var(--text);
+}
+.notation-options button:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 2px;
+}
+.notation-options button.active {
+  background: rgba(245, 197, 66, 0.16);
+  color: var(--gold-bright);
 }
 
 /* ------------------------------------------------------------------ */
@@ -618,6 +669,29 @@ h3 {
 .lesson strong {
   color: var(--text);
 }
+.lesson-trumpet-preview {
+  height: 300px;
+  margin: 24px 0 18px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background:
+    radial-gradient(
+      520px 220px at 50% 45%,
+      rgba(245, 197, 66, 0.1),
+      transparent 72%
+    ),
+    var(--bg);
+}
+.lesson-trumpet-preview canvas {
+  display: block;
+}
+.lesson-figure-caption {
+  margin: -4px 18px 14px !important;
+  color: var(--muted);
+  font-size: 0.84rem !important;
+  text-align: center;
+}
 /* Lesson figures (small SVG diagrams) */
 .lesson-figure {
   margin: 22px 0 4px;
@@ -706,32 +780,35 @@ h3 {
 }
 .tube-segment .tube-ink {
   fill: none;
-  stroke: #100f0d;
-  stroke-width: 31;
+  stroke: #3a270f;
+  stroke-width: 20;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 .tube-segment .tube-brass {
   fill: none;
   stroke: url(#partsGoldGrad);
-  stroke-width: 22;
+  stroke-width: 14;
   stroke-linecap: round;
   stroke-linejoin: round;
   transition:
     filter 0.15s ease,
     stroke 0.15s ease;
 }
-.tube-segment.slide .tube-ink {
-  stroke-width: 25;
+.tube-segment.silver .tube-brass {
+  stroke: url(#partsSilverGrad);
 }
-.tube-segment.slide .tube-brass {
+.tube-segment.slide .tube-ink {
   stroke-width: 16;
 }
+.tube-segment.slide .tube-brass {
+  stroke-width: 10;
+}
 .tube-segment.brace .tube-ink {
-  stroke-width: 17;
+  stroke-width: 10;
 }
 .tube-segment.brace .tube-brass {
-  stroke-width: 9;
+  stroke-width: 5;
 }
 .tube-segment.active .tube-brass,
 .valve-stack.active .valve-casing,
@@ -742,21 +819,21 @@ h3 {
 
 .bell-shell {
   fill: url(#partsBellGrad);
-  stroke: #100f0d;
-  stroke-width: 9;
+  stroke: #5f3c0d;
+  stroke-width: 4;
   cursor: pointer;
   transition: filter 0.15s ease;
 }
 .bell-inner {
-  fill: #191309;
-  stroke: #100f0d;
-  stroke-width: 5;
+  fill: #1a1207;
+  stroke: #6d4610;
+  stroke-width: 4;
   cursor: pointer;
 }
 .bell-rim {
   fill: none;
-  stroke: #ffd45b;
-  stroke-width: 10;
+  stroke: #e8bd55;
+  stroke-width: 6;
   cursor: pointer;
   transition: filter 0.15s ease;
 }
@@ -764,7 +841,14 @@ h3 {
   filter: drop-shadow(0 0 12px rgba(255, 216, 94, 0.7));
 }
 .bell-shadow {
-  fill: rgba(13, 10, 5, 0.72);
+  fill: rgba(20, 13, 4, 0.72);
+  pointer-events: none;
+}
+.bell-highlight {
+  fill: none;
+  stroke: rgba(255, 235, 161, 0.76);
+  stroke-width: 4;
+  stroke-linecap: round;
   pointer-events: none;
 }
 .valve-stack {
@@ -772,24 +856,24 @@ h3 {
 }
 .valve-casing {
   fill: url(#partsGoldGrad);
-  stroke: #100f0d;
-  stroke-width: 6;
+  stroke: #5a390d;
+  stroke-width: 3;
   transition: filter 0.15s ease;
 }
 .valve-collar {
-  fill: #ffc94c;
-  stroke: #100f0d;
-  stroke-width: 5;
+  fill: url(#partsSilverGrad);
+  stroke: #596064;
+  stroke-width: 2.5;
 }
 .valve-stem {
-  stroke: #100f0d;
-  stroke-width: 14;
+  stroke: #bfc6c9;
+  stroke-width: 8;
   stroke-linecap: round;
 }
 .valve-button {
-  fill: #fff2d4;
-  stroke: #100f0d;
-  stroke-width: 5;
+  fill: url(#partsSilverGrad);
+  stroke: #60686c;
+  stroke-width: 3;
   transition: fill 0.15s ease;
 }
 .valve-stack.active .valve-button {
@@ -799,20 +883,20 @@ h3 {
   cursor: pointer;
 }
 .mouth-stem {
-  stroke: #100f0d;
-  stroke-width: 18;
+  stroke: #b9c0c3;
+  stroke-width: 11;
   stroke-linecap: round;
 }
 .mouth-cup {
-  fill: #eec56d;
-  stroke: #100f0d;
-  stroke-width: 7;
+  fill: url(#partsSilverGrad);
+  stroke: #596064;
+  stroke-width: 3;
   transition: filter 0.15s ease;
 }
 .mouth-glow {
   fill: none;
-  stroke: #fff1be;
-  stroke-width: 5;
+  stroke: #ffffff;
+  stroke-width: 3;
   stroke-linecap: round;
   pointer-events: none;
 }
@@ -822,7 +906,7 @@ h3 {
 .finger-hook {
   fill: none;
   stroke: url(#partsGoldGrad);
-  stroke-width: 14;
+  stroke-width: 8;
   stroke-linecap: round;
   stroke-linejoin: round;
   cursor: pointer;
@@ -832,14 +916,14 @@ h3 {
   cursor: pointer;
 }
 .water-key circle {
-  fill: #f2b02b;
-  stroke: #100f0d;
-  stroke-width: 5;
+  fill: url(#partsSilverGrad);
+  stroke: #596064;
+  stroke-width: 3;
   transition: filter 0.15s ease;
 }
 .water-key line {
-  stroke: #100f0d;
-  stroke-width: 10;
+  stroke: #bdc4c7;
+  stroke-width: 7;
   stroke-linecap: round;
 }
 .water-key.active circle,
@@ -849,7 +933,7 @@ h3 {
 .painted-highlight {
   fill: none;
   stroke: #ffe486;
-  stroke-width: 5;
+  stroke-width: 3;
   stroke-linecap: round;
   pointer-events: none;
 }
@@ -1068,5 +1152,37 @@ h3 {
   }
   .parts-grid {
     grid-template-columns: 1fr;
+  }
+  .nav-actions {
+    gap: 8px;
+  }
+  .notation-label {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .nav-inner {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  .brand {
+    font-size: 1rem;
+  }
+  .nav-actions {
+    gap: 4px;
+  }
+  .nav-links {
+    gap: 0;
+  }
+  .nav-link {
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 0.86rem;
+  }
+  .notation-options button {
+    padding-left: 6px;
+    padding-right: 6px;
+    font-size: 0.66rem;
   }
 }
