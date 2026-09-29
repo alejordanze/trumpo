@@ -4,6 +4,7 @@ import type { Route } from "./+types/home";
 import { Hero } from "~/components/Hero";
 import { Section } from "~/components/Section";
 import { PlayableTrumpet, FingeringGuide } from "~/components/PlayableTrumpet";
+import { NoteName } from "~/lib/notation";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -95,16 +96,25 @@ export default function Home() {
             </h2>
             <p>
               Hold the blow button (or the spacebar) and press the valves to
-              walk up and down the scale. Pick a scale — natural C, G, F, B♭,
-              minors and more — or shift the octave to unlock a whole new set of
-              notes.
+              walk up and down the scale. Pick a scale — natural{" "}
+              <NoteName note="C" />, <NoteName note="G" />,{" "}
+              <NoteName note="F" />, <NoteName note="B♭" />, minors and more —
+              or shift the octave to unlock a whole new set of notes.
             </p>
           </div>
           <PlayableTrumpet />
 
           <div style={{ marginTop: 48 }}>
             <div className="section-head" style={{ marginBottom: 24 }}>
-              <h2 style={{ fontSize: "1.5rem" }}>Fingering guide</h2>
+              <div>
+                <h2 style={{ fontSize: "1.5rem" }}>Playground controls</h2>
+                <p style={{ marginTop: 8 }}>
+                  These unique combinations keep every note playable in the
+                  browser. See <Link to="/lessons#first-note">Lesson 7</Link>{" "}
+                  for real trumpet fingerings, where several notes share the
+                  same valve position.
+                </p>
+              </div>
             </div>
             <FingeringGuide />
           </div>

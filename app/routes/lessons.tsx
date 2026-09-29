@@ -3,6 +3,9 @@ import { motion } from "framer-motion";
 import type { Route } from "./+types/lessons";
 import { TrumpetParts } from "~/components/TrumpetParts";
 import { EmbouchureDiagram, AirPathDiagram } from "~/components/LessonArt";
+import { ClientOnly } from "~/components/ClientOnly";
+import { Trumpet3D } from "~/components/Trumpet3D";
+import { NoteName } from "~/lib/notation";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -10,7 +13,7 @@ export function meta({}: Route.MetaArgs) {
     {
       name: "description",
       content:
-        "Learn to play the trumpet from scratch: requirements, parts, how to hold it, the mouthpiece, embouchure, breathing and your first notes.",
+        "Learn to play the trumpet from scratch: requirements, parts, care, posture, embouchure, breathing, first notes, tonguing, rhythm and practice.",
     },
   ];
 }
@@ -33,8 +36,10 @@ const LESSONS: Lesson[] = [
         </p>
         <ul>
           <li>
-            <strong>A B♭ trumpet</strong> with a matching mouthpiece (a 7C is a
-            great, common starter size).
+            <strong>
+              A <NoteName note="B♭" /> trumpet
+            </strong>{" "}
+            with a matching mouthpiece (a 7C is a great, common starter size).
           </li>
           <li>
             <strong>Valve oil</strong> to keep the valves moving freely, plus a
@@ -62,7 +67,51 @@ const LESSONS: Lesson[] = [
           <strong>number on the diagram</strong> — or any card below — to see
           what each part is called and where it sits.
         </p>
+        <div className="lesson-trumpet-preview">
+          <ClientOnly fallback={<div className="canvas-fallback">Loading trumpet…</div>}>
+            {() => <Trumpet3D autoRotate interactive />}
+          </ClientOnly>
+          <p className="lesson-figure-caption">
+            Drag to rotate the model and recognize the same parts in a real instrument.
+          </p>
+        </div>
         <TrumpetParts />
+      </>
+    ),
+  },
+  {
+    id: "care",
+    title: "Care, cleaning & valve oil",
+    body: (
+      <>
+        <p>
+          A clean, well-oiled trumpet responds more easily and lasts longer.
+          Build these small habits into every practice session.
+        </p>
+        <ul>
+          <li>
+            <strong>Before playing:</strong> push the mouthpiece in gently with
+            a small twist — never force it or tap it into place.
+          </li>
+          <li>
+            <strong>Oil the valves:</strong> remove one valve at a time, add a
+            few drops to the smooth valve surface, and guide it straight back
+            into its matching casing.
+          </li>
+          <li>
+            <strong>Empty condensation:</strong> open the water keys over a
+            cloth and blow gently through the instrument when you finish.
+          </li>
+          <li>
+            <strong>After practice:</strong> wipe fingerprints from the
+            outside and store the trumpet in its case. Give it a proper
+            lukewarm-water cleaning regularly.
+          </li>
+        </ul>
+        <p>
+          If a mouthpiece or valve is stuck, stop and ask a teacher or repair
+          technician for help — tools and force can damage the instrument.
+        </p>
       </>
     ),
   },
@@ -163,30 +212,78 @@ const LESSONS: Lesson[] = [
         <p>
           Put it together: take a full breath, form your “M” embouchure, and
           buzz a steady tone into the trumpet with the valves up. That open note
-          is your <strong>C</strong>. Congratulations — you're playing!
+          is your <strong><NoteName note="C" /></strong>. Congratulations — you're playing!
         </p>
         <p>
-          From there, the valves walk you up the scale. On a B♭ trumpet the C
-          major scale uses these fingerings — the same ones the interactive
-          player uses, so open is your base note and pressing valves climbs
-          higher. Keep the air constant as you press:
+          From there, the valves walk you up the scale. On a{" "}
+          <NoteName note="B♭" /> trumpet the{" "}
+          <NoteName note="C" />{" "}
+          major scale uses these real fingerings. Keep your air supported and
+          adjust its speed and your embouchure to move between notes that share
+          the same fingering:
         </p>
         <ul>
           <li>
-            <strong>C</strong>: open · <strong>D</strong>: 1+3 ·{" "}
-            <strong>E</strong>: 1+2 · <strong>F</strong>: 1
+            <strong><NoteName note="C" /></strong>: open · <strong><NoteName note="D" /></strong>: 1 + 3 ·{" "}
+            <strong><NoteName note="E" /></strong>: 1 + 2 · <strong><NoteName note="F" /></strong>: 1
           </li>
           <li>
-            <strong>G</strong>: 3 · <strong>A</strong>: 2+3 ·{" "}
-            <strong>B</strong>: 2 · <strong>C</strong>: 1+2+3
+            <strong><NoteName note="G" /></strong>: open · <strong><NoteName note="A" /></strong>: 1 + 2 ·{" "}
+            <strong><NoteName note="B" /></strong>: 2 · <strong><NoteName note="C" /></strong>: open
           </li>
         </ul>
+        <p>
+          Open fingering can produce <strong><NoteName note="C" /></strong>,{" "}
+          <strong><NoteName note="G" /></strong>, and the next{" "}
+          <strong><NoteName note="C" /></strong> because your lips and air select
+          different notes from the trumpet's harmonic series.
+        </p>
         <p>
           Head back to the{" "}
           <Link to="/#play" style={{ color: "var(--gold-bright)", fontWeight: 600 }}>
             interactive trumpet
           </Link>{" "}
-          to hear each of these and train your fingers with the 1, 2 and 3 keys.
+          to hear the pitches and train with the 1, 2 and 3 keys. Its controls
+          intentionally use one unique combination per note because a browser
+          cannot detect changes in your lips or air.
+        </p>
+      </>
+    ),
+  },
+  {
+    id: "tonguing",
+    title: "Tonguing, rhythm & tuning",
+    body: (
+      <>
+        <p>
+          Once your air and buzz are working, your tongue starts and separates
+          notes. It should shape the air, not stop it in your throat.
+        </p>
+        <ul>
+          <li>
+            <strong>Start a note:</strong> whisper “too” or “doo” while the air
+            is already moving. Let the tongue touch just behind the top teeth,
+            then release it.
+          </li>
+          <li>
+            <strong>Keep the air continuous:</strong> practice four even notes
+            on one pitch, then four notes with the valves changing. The tongue
+            moves; the breath stays steady.
+          </li>
+          <li>
+            <strong>Build rhythm:</strong> set a slow metronome, count
+            “1-and-2-and,” and play one note on each count before adding
+            fingerings.
+          </li>
+          <li>
+            <strong>Listen and tune:</strong> use a tuner occasionally, but
+            trust your ears too. A steady tone, relaxed embouchure, and gentle
+            air support matter more than chasing every cent.
+          </li>
+        </ul>
+        <p>
+          Start with a comfortable middle register. Range comes gradually from
+          efficient air and consistent practice, never from squeezing the lips.
         </p>
       </>
     ),

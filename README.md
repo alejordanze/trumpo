@@ -13,8 +13,11 @@ practice basic fingerings, and make a few notes directly in the browser.
 - Hold the blow control (or the spacebar) to sustain a note and hear the
   fingering change as you play.
 - Choose from several scales and move between octaves.
+- Switch note names between letter notation (\`C D E\`) and solfège
+  (\`Do Re Mi\`).
 - Follow lessons covering the trumpet’s parts, posture, mouthpiece,
-  embouchure, breathing, first notes, and practice habits.
+  embouchure, breathing, care, first notes, tonguing, rhythm, and practice
+  habits.
 - Use the fingering guide to connect each note with its valve combination.
 
 The browser instrument is a practice and learning aid, not a replacement for
@@ -86,8 +89,8 @@ npm run start
 
 ```text
 app/
-├── components/   # Shared UI and interactive trumpet components
-├── lib/          # Audio synthesis and musical note/fingering data
+├── components/   # Shared UI, notation controls, and trumpet components
+├── lib/          # Audio, musical note/fingering data, and notation state
 ├── routes/       # Home page and lesson content
 ├── app.css       # Global styles and design tokens
 └── root.tsx      # Application shell and document layout

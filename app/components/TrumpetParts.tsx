@@ -9,109 +9,92 @@ interface Part {
   anchor?: "start" | "middle" | "end";
 }
 
-const ROTATION_DEG = 18;
-const ROTATION_CENTER = [480, 250] as const;
-const DRAW_SHIFT_Y = 36;
-
-function target(x: number, y: number): [number, number] {
-  const radians = (ROTATION_DEG * Math.PI) / 180;
-  const dx = x - ROTATION_CENTER[0];
-  const dy = y - ROTATION_CENTER[1];
-
-  return [
-    Math.round(
-      ROTATION_CENTER[0] + dx * Math.cos(radians) - dy * Math.sin(radians),
-    ),
-    Math.round(
-      ROTATION_CENTER[1] +
-        dx * Math.sin(radians) +
-        dy * Math.cos(radians) +
-        DRAW_SHIFT_Y,
-    ),
-  ];
-}
-
 const PARTS: Part[] = [
   {
     n: 1,
     name: "Mouthpiece",
     desc: "The cup you buzz into; it detaches for practice and cleaning.",
-    marker: [88, 54],
-    target: target(106, 160),
+    marker: [74, 66],
+    target: [66, 214],
     anchor: "start",
   },
   {
     n: 2,
     name: "Lead pipe",
     desc: "Carries your air from the mouthpiece into the instrument.",
-    marker: [302, 58],
-    target: target(332, 190),
+    marker: [246, 58],
+    target: [238, 214],
     anchor: "middle",
   },
   {
     n: 3,
     name: "Valves (1, 2, 3)",
     desc: "Pressing them reroutes air through extra tubing to change the pitch.",
-    marker: [486, 60],
-    target: target(400, 142),
+    marker: [406, 60],
+    target: [390, 172],
     anchor: "middle",
   },
   {
     n: 4,
     name: "Tuning slide",
     desc: "The main U-bend you pull in or out to tune the whole trumpet.",
-    marker: [64, 300],
-    target: target(140, 254),
+    marker: [82, 468],
+    target: [206, 302],
     anchor: "start",
   },
   {
     n: 5,
     name: "Valve slides",
     desc: "Smaller slides that fine-tune each valve's pitch.",
-    marker: [330, 488],
-    target: target(386, 330),
+    marker: [370, 492],
+    target: [490, 348],
     anchor: "middle",
   },
   {
     n: 6,
     name: "Bell",
     desc: "The flared end that projects and colors your sound.",
-    marker: [886, 112],
-    target: target(846, 242),
+    marker: [886, 70],
+    target: [850, 246],
     anchor: "end",
   },
   {
     n: 7,
     name: "Water key",
     desc: "A small lever (the spit valve) that drains condensation.",
-    marker: [706, 488],
-    target: target(586, 270),
+    marker: [744, 474],
+    target: [650, 356],
     anchor: "middle",
   },
   {
     n: 8,
     name: "Finger hook",
     desc: "Where your right-hand ring finger or pinky rests to steady the horn.",
-    marker: [520, 488],
-    target: target(500, 280),
+    marker: [570, 490],
+    target: [505, 272],
     anchor: "middle",
   },
 ];
 
-const VALVES = [350, 400, 450];
+const VALVES = [340, 390, 440];
 
 function TubeStroke({
   d,
   active,
   size = "body",
+  tone = "brass",
   ...props
 }: {
   d: string;
   active?: boolean;
   size?: "body" | "slide" | "brace";
+  tone?: "brass" | "silver";
 } & SVGProps<SVGGElement>) {
   return (
-    <g className={`tube-segment ${size}${active ? " active" : ""}`} {...props}>
+    <g
+      className={`tube-segment ${size} ${tone}${active ? " active" : ""}`}
+      {...props}
+    >
       <path className="tube-ink" d={d} />
       <path className="tube-brass" d={d} />
     </g>
@@ -153,69 +136,87 @@ export function TrumpetParts() {
               <stop offset="1" stopColor="#aa6c14" />
             </linearGradient>
             <linearGradient id="partsBellGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stopColor="#fff0a8" />
-              <stop offset="0.42" stopColor="#f0a51e" />
-              <stop offset="1" stopColor="#8c5710" />
+              <stop offset="0" stopColor="#8f5a10" />
+              <stop offset="0.28" stopColor="#f3c75c" />
+              <stop offset="0.52" stopColor="#a76812" />
+              <stop offset="0.78" stopColor="#f9dc7d" />
+              <stop offset="1" stopColor="#6f4109" />
+            </linearGradient>
+            <linearGradient id="partsSilverGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor="#f6f8f8" />
+              <stop offset="0.42" stopColor="#aab2b7" />
+              <stop offset="0.72" stopColor="#e4e8e9" />
+              <stop offset="1" stopColor="#747d82" />
             </linearGradient>
           </defs>
 
-          <g
-            className="trumpet-drawing"
-            transform={`translate(0 ${DRAW_SHIFT_Y}) rotate(${ROTATION_DEG} ${ROTATION_CENTER[0]} ${ROTATION_CENTER[1]})`}
-          >
+          <g className="trumpet-drawing">
             <path
               className={`bell-shell${active === 6 ? " active" : ""}`}
-              d="M620 190 C690 178 766 132 854 104 C888 96 910 122 912 154 C916 205 916 280 912 326 C910 358 888 384 854 376 C766 348 690 302 620 290 C652 262 652 218 620 190 Z"
+              d="M566 220 C646 216 738 184 844 126 C870 112 889 132 892 168 C896 211 896 277 892 320 C889 356 870 376 844 362 C738 304 646 272 566 268 C584 256 584 232 566 220 Z"
               {...handlers(6)}
             />
             <ellipse
               className="bell-inner"
               cx="854"
-              cy="240"
-              rx="33"
-              ry="116"
+              cy="244"
+              rx="27"
+              ry="112"
               {...handlers(6)}
             />
             <ellipse
               className={`bell-rim${active === 6 ? " active" : ""}`}
-              cx="854"
-              cy="240"
-              rx="45"
-              ry="132"
+              cx="858"
+              cy="244"
+              rx="37"
+              ry="125"
               {...handlers(6)}
             />
             <path
               className="bell-shadow"
-              d="M646 214 C720 206 782 176 846 134 C790 192 742 230 646 254 Z"
+              d="M590 230 C676 226 756 191 844 139 C775 204 704 242 590 250 Z"
+            />
+            <path
+              className="bell-highlight"
+              d="M592 222 C674 220 744 198 830 151 C756 213 681 238 594 239"
             />
 
             <TubeStroke
-              d="M146 190 C262 190 430 190 642 190"
+              d="M112 214 C198 214 282 214 448 214"
               active={active === 2}
               {...handlers(2)}
             />
-            <TubeStroke d="M164 230 C300 230 460 230 632 230" />
-            <TubeStroke d="M192 270 C300 270 410 270 532 270" />
+            <TubeStroke d="M330 230 C412 228 496 228 584 232" />
+            <TubeStroke d="M438 314 C492 314 544 298 574 266" />
             <TubeStroke
-              d="M142 190 C96 196 92 262 190 270"
+              d="M238 214 C203 214 184 232 184 262 C184 291 204 306 238 306 L318 306"
               active={active === 4}
               {...handlers(4)}
             />
             <TubeStroke
-              d="M214 270 C162 282 154 338 226 342 C302 346 310 278 244 278"
+              d="M234 306 L310 306"
               active={active === 4}
               size="slide"
+              tone="silver"
               {...handlers(4)}
             />
             <TubeStroke
-              d="M548 270 C586 272 616 250 620 230 C626 210 638 196 656 190"
+              d="M570 266 C582 252 586 240 584 232"
               size="slide"
             />
             <TubeStroke
-              d="M176 190 L116 158"
+              d="M112 214 L86 214"
               active={active === 1}
               size="slide"
+              tone="silver"
               {...handlers(1)}
+            />
+            <TubeStroke
+              d="M206 214 L284 214"
+              active={active === 2}
+              size="slide"
+              tone="silver"
+              {...handlers(2)}
             />
 
             {VALVES.map((x, i) => (
@@ -225,79 +226,80 @@ export function TrumpetParts() {
                 {...handlers(3)}
               >
                 <rect
-                  x={x - 17}
-                  y={126}
-                  width={34}
-                  height={172}
-                  rx={16}
+                  x={x - 15}
+                  y={188}
+                  width={30}
+                  height={132}
+                  rx={14}
                   className="valve-casing"
                 />
                 <rect
-                  x={x - 21}
-                  y={128}
-                  width={42}
-                  height={14}
-                  rx={7}
+                  x={x - 19}
+                  y={184}
+                  width={38}
+                  height={13}
+                  rx={6}
                   className="valve-collar"
                 />
                 <rect
-                  x={x - 21}
-                  y={284}
-                  width={42}
-                  height={14}
-                  rx={7}
+                  x={x - 19}
+                  y={311}
+                  width={38}
+                  height={13}
+                  rx={6}
                   className="valve-collar"
                 />
-                <line x1={x} y1={106} x2={x} y2={126} className="valve-stem" />
+                <line x1={x} y1={156} x2={x} y2={184} className="valve-stem" />
                 <ellipse
                   cx={x}
-                  cy={102 - i * 2}
-                  rx={21}
-                  ry={12}
+                  cy={146 - i * 2}
+                  rx={20}
+                  ry={9}
                   className="valve-button"
                 />
               </g>
             ))}
 
             <TubeStroke
-              d="M334 298 C332 344 370 344 370 298"
+              d="M340 314 C340 346 314 354 300 334 C290 319 300 296 318 292"
               active={active === 5}
               size="slide"
               {...handlers(5)}
             />
             <TubeStroke
-              d="M386 298 C384 356 426 356 426 298"
+              d="M390 190 C390 168 414 166 416 190"
               active={active === 5}
               size="slide"
               {...handlers(5)}
             />
             <TubeStroke
-              d="M438 298 C436 340 476 340 476 298"
+              d="M440 312 C454 322 476 326 500 326 L616 326 C648 326 648 360 616 360 L478 360 C456 360 446 344 446 322"
               active={active === 5}
               size="slide"
+              tone="silver"
               {...handlers(5)}
             />
 
-            <TubeStroke d="M292 196 L250 264" size="brace" />
-            <TubeStroke d="M574 222 L522 268" size="brace" />
+            <TubeStroke d="M292 218 L292 302" size="brace" />
+            <TubeStroke d="M548 234 L548 294" size="brace" />
 
             <g
               className={`mouthpiece${active === 1 ? " active" : ""}`}
               {...handlers(1)}
             >
-              <line x1="74" y1="142" x2="118" y2="158" className="mouth-stem" />
+              <line x1="76" y1="214" x2="112" y2="214" className="mouth-stem" />
               <path
-                d="M62 116 L108 134 L94 174 L48 156 Z"
+                d="M78 204 L67 204 C61 197 52 194 43 196 L34 205 L34 223 L43 232 C52 234 61 231 67 224 L78 224 Z"
                 className="mouth-cup"
               />
               <path
-                d="M64 124 L96 136 L88 158 L56 148 Z"
+                d="M42 204 C52 201 61 207 66 214"
                 className="mouth-glow"
               />
             </g>
 
             <path
-              d="M498 260 C530 266 532 302 502 306"
+              d="M468 248 C500 246 514 264 504 282 C497 295 481 296 479 282"
               className={`finger-hook${active === 8 ? " active" : ""}`}
               {...handlers(8)}
             />
@@ -305,14 +307,14 @@ export function TrumpetParts() {
               className={`water-key${active === 7 ? " active" : ""}`}
               {...handlers(7)}
             >
-              <circle cx="586" cy="270" r="9" />
-              <line x1="588" y1="270" x2="610" y2="294" />
+              <circle cx="650" cy="356" r="8" />
+              <line x1="650" y1="356" x2="678" y2="376" />
             </g>
 
-            <path d="M242 188 L318 188" className="painted-highlight" />
-            <path d="M488 188 L594 188" className="painted-highlight" />
+            <path d="M124 207 L202 207" className="painted-highlight" />
+            <path d="M466 222 L558 225" className="painted-highlight" />
             <path
-              d="M232 270 C206 278 194 300 206 318"
+              d="M194 246 C187 266 193 286 208 296"
               className="painted-highlight"
             />
           </g>

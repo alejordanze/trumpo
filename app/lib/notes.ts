@@ -1,15 +1,15 @@
 // Trumpet fingering → note mapping, with selectable musical scales.
 //
-// This models a B♭ trumpet. The eight valve combinations map to the eight
-// ascending degrees of a chosen scale (do → do an octave up), using the real
-// B♭ trumpet fingerings for the C major scale wherever a unique combination
-// exists:
+// The browser playground maps the eight valve combinations to the eight
+// ascending degrees of a chosen scale (do → do an octave up). This is an
+// intentionally simplified control scheme, not a real fingering chart:
 //
 //   C = open   D = 1+3   E = 1+2   F = 1   G = 3   A = 2+3   B = 2   C = 1+2+3
 //
-// (On a real trumpet G, the upper A and the octave C reuse open/1+2 with a
-// different lip partial; since we can't detect the lips, those three get the
-// remaining unique combinations so the whole scale stays playable.)
+// On a real B♭ trumpet, the written C-major sequence is open, 1+3, 1+2, 1,
+// open, 1+2, 2, open. Since the browser cannot detect air speed or embouchure,
+// repeated fingerings receive the remaining unique combinations here so the
+// full scale stays playable from the keyboard.
 //
 // Selecting a different scale — or shifting the octave — re-maps the same
 // buttons to that scale's notes, keeping 1+3 on the 2nd degree, etc.
@@ -49,8 +49,8 @@ function midiToName(m: number): string {
   return `${name}${octave}`;
 }
 
-// Valve combination for each ascending scale degree (do … do'), using real B♭
-// trumpet C-major fingerings. Keys are the sorted valve set joined with "-".
+// Playground control for each ascending scale degree (do … do'). Keys are the
+// sorted valve set joined with "-".
 //   degree:  do   re    mi    fa   sol  la    ti   do'
 //   note(C): C    D     E     F    G    A     B    C
 const COMBO_ORDER = [
