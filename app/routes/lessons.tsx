@@ -6,7 +6,7 @@ import { EmbouchureDiagram, AirPathDiagram } from "~/components/LessonArt";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Lessons — TrumpetTrainer" },
+    { title: "Lessons — Trumpo" },
     {
       name: "description",
       content:
