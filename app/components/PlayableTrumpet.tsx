@@ -16,8 +16,14 @@ import {
   type Valve,
 } from "~/lib/notes";
 import { initAudio, startNote, stopNote } from "~/lib/audio";
+import {
+  formatNoteName,
+  formatScaleLabel,
+  useNotation,
+} from "~/lib/notation";
 
 export function PlayableTrumpet() {
+  const { notation } = useNotation();
   const [pressed, setPressed] = useState<Set<Valve>>(new Set());
   const [blowing, setBlowing] = useState(false);
   const [scaleId, setScaleId] = useState(DEFAULT_SCALE.id);
@@ -139,7 +145,7 @@ export function PlayableTrumpet() {
                 onClick={() => setScaleId(s.id)}
                 title={s.name}
               >
-                {s.short}
+                {formatScaleLabel(s.short, notation)}
               </button>
             ))}
           </div>
@@ -170,9 +176,9 @@ export function PlayableTrumpet() {
         </div>
 
         <div className={"now-playing" + (blowing ? "" : " silent")}>
-          <div className="note">{note.name}</div>
+          <div className="note">{formatNoteName(note.name, notation)}</div>
           <div className="label">
-            {blowing ? "Now playing" : "Ready"} · {scale.name}
+            {blowing ? "Now playing" : "Ready"} · {formatScaleLabel(scale.name, notation)}
           </div>
         </div>
 
@@ -206,6 +212,7 @@ export function PlayableTrumpet() {
 
 /** Reference of every fingering for a scale (defaults to C major). */
 export function FingeringGuide({ scaleNotes }: { scaleNotes?: NoteInfo[] }) {
+  const { notation } = useNotation();
   const notes = scaleNotes ?? buildScaleNotes(DEFAULT_SCALE, DEFAULT_OCTAVE);
   return (
     <div
@@ -222,7 +229,7 @@ export function FingeringGuide({ scaleNotes }: { scaleNotes?: NoteInfo[] }) {
             className="gold-text"
             style={{ fontSize: "1.5rem", fontWeight: 900 }}
           >
-            {note.name}
+            {formatNoteName(note.name, notation)}
           </div>
           <div
             style={{
