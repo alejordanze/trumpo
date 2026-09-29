@@ -1,13 +1,13 @@
 import { NavLink } from "react-router";
-import { Music4 } from "lucide-react";
 import { NotationSwitch } from "./NotationSwitch";
+import { Logo } from "~/icons/Logo";
 
 export function Navbar() {
   return (
     <nav className="nav">
       <div className="container nav-inner">
         <NavLink to="/" className="brand">
-          <Music4 size={24} />
+          <Logo />
           <span>Trumpo</span>
         </NavLink>
         <div className="nav-actions">

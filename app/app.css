@@ -203,8 +203,6 @@ h3 {
   white-space: nowrap;
 }
 .notation-label {
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   font-weight: 700;
 }
 .notation-options {
