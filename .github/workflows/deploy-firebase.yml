@@ -1,0 +1,108 @@
+name: Verify and deploy to Firebase Hosting
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: firebase-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build static site
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check
+        run: npm run typecheck
+
+      - name: Build prerendered site
+        run: npm run build
+
+      - name: Verify static output
+        run: |
+          test -f build/client/index.html
+          test -f build/client/lessons/index.html
+          test -f build/client/__spa-fallback.html
+          test ! -d build/server
+
+      - name: Store static site
+        uses: actions/upload-artifact@v4
+        with:
+          name: firebase-site
+          path: build/client
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 1
+
+  preview:
+    name: Deploy preview channel
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Check out Firebase configuration
+        uses: actions/checkout@v4
+
+      - name: Restore static site
+        uses: actions/download-artifact@v4
+        with:
+          name: firebase-site
+          path: build/client
+
+      - name: Deploy preview
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TRUMPO_57216 }}
+          projectId: ${{ vars.FIREBASE_PROJECT_ID }}
+          expires: 7d
+
+  production:
+    name: Deploy live site
+    if: github.event_name == 'push'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Check out Firebase configuration
+        uses: actions/checkout@v4
+
+      - name: Restore static site
+        uses: actions/download-artifact@v4
+        with:
+          name: firebase-site
+          path: build/client
+
+      - name: Deploy production
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TRUMPO_57216 }}
+          projectId: ${{ vars.FIREBASE_PROJECT_ID }}
+          channelId: live

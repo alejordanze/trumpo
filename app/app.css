@@ -203,8 +203,6 @@ h3 {
   white-space: nowrap;
 }
 .notation-label {
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
   font-weight: 700;
 }
 .notation-options {
@@ -1101,6 +1099,11 @@ h3 {
 .footer .credit {
   color: var(--muted);
   font-size: 0.92rem;
+  white-space: nowrap;
+}
+.footer .credit svg {
+  display: inline-block;
+  vertical-align: middle;
 }
 .footer .credit b {
   color: var(--gold-bright);
