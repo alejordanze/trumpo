@@ -10,7 +10,14 @@ export function Footer() {
             fill="currentColor"
             aria-label="love"
             style={{ verticalAlign: "-2px", margin: "0 3px" }}
-          /> by <a href="https://alejordan.com"><b>Alejandro Jordan</b></a>
+          /> by{" "}
+          <a
+            href="https://alejordan.com"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <b>Alejandro Jordan</b>
+          </a>
         </p>
         <div className="footer-social">
           <a
