@@ -56,7 +56,7 @@ modern browsers.
 
 ### Production build
 
-Create and serve a production build locally:
+Create the prerendered production site and preview it locally:
 
 ```bash
 npm run build
@@ -72,10 +72,31 @@ npm run start
 | `npm run start` | Serve the production build. |
 | `npm run typecheck` | Generate React Router types and run TypeScript checks. |
 
+## Deployment
+
+Trumpo is prerendered into `build/client` and deployed to Firebase Hosting by
+[the GitHub Actions workflow](.github/workflows/deploy-firebase.yml). Pull
+requests targeting `main` are type-checked and built; pull requests from
+branches in this repository also receive a seven-day Firebase preview channel.
+Every push to `main` deploys the same verified artifact to the live channel.
+
+Configure these values under **Settings → Secrets and variables → Actions** in
+the GitHub repository before the first deployment:
+
+- Repository variable `FIREBASE_PROJECT_ID`: the Firebase project ID.
+- Repository secret `FIREBASE_SERVICE_ACCOUNT`: the complete JSON key for a
+  service account allowed to deploy Firebase Hosting releases.
+
+Create the Firebase project and enable Hosting before adding the credentials.
+The Firebase CLI can create the deployment service account and GitHub secret
+with `firebase init hosting:github`. If that helper creates a project-specific
+secret name, update both `firebaseServiceAccount` references in the checked-in
+workflow to match it, and keep this repository's existing `firebase.json`.
+
 ## Technologies
 
 - **React 19** for the component-based user interface.
-- **React Router 7** for routing and server-side rendering.
+- **React Router 7** for routing and static prerendering.
 - **TypeScript** for typed application code.
 - **Vite** for development and bundling.
 - **Tailwind CSS 4** alongside custom CSS for styling and design tokens.

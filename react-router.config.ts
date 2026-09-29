@@ -1,7 +1,8 @@
 import type { Config } from "@react-router/dev/config";
 
 export default {
-  // Config options...
-  // Server-side render by default, to enable SPA mode set this to `false`
-  ssr: true,
+  // Trumpo has no request-time server data, so generate every static route at
+  // build time and deploy only build/client to Firebase Hosting.
+  ssr: false,
+  prerender: true,
 } satisfies Config;
