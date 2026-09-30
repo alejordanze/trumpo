@@ -1,8 +1,13 @@
 import type { Config } from "@react-router/dev/config";
+import { LESSON_IDS } from "./app/lib/lessonIds";
 
 export default {
-  // Trumpo has no request-time server data, so generate every static route at
-  // build time and deploy only build/client to Firebase Hosting.
+  // Generate the course index and every reusable lesson URL at build time for
+  // Firebase Hosting's static deployment.
   ssr: false,
-  prerender: true,
+  prerender: ({ getStaticPaths }) => [
+    ...getStaticPaths(),
+    "/lessons",
+    ...Object.values(LESSON_IDS).map((id) => `/lessons/${id}`),
+  ],
 } satisfies Config;
