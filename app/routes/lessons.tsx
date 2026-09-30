@@ -1,13 +1,26 @@
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 import { motion } from "framer-motion";
 import type { Route } from "./+types/lessons";
 import { TrumpetParts } from "~/components/TrumpetParts";
 import { EmbouchureDiagram, AirPathDiagram } from "~/components/LessonArt";
 import { ClientOnly } from "~/components/ClientOnly";
 import { Trumpet3D } from "~/components/Trumpet3D";
+import { LESSON_IDS } from "~/lib/lessonIds";
 import { NoteName } from "~/lib/notation";
 
-export function meta({}: Route.MetaArgs) {
+export function meta({ params }: Route.MetaArgs) {
+  const lesson = LESSONS.find((item) => item.id === params.lessonId);
+
+  if (lesson) {
+    return [
+      { title: `${lesson.title} — Trumpo` },
+      {
+        name: "description",
+        content: `Lesson: ${lesson.title}. Learn trumpet step by step with Trumpo.`,
+      },
+    ];
+  }
+
   return [
     { title: "Lessons — Trumpo" },
     {
@@ -26,7 +39,7 @@ interface Lesson {
 
 const LESSONS: Lesson[] = [
   {
-    id: "requirements",
+    id: LESSON_IDS.requirements,
     title: "What you'll need",
     body: (
       <>
@@ -58,7 +71,7 @@ const LESSONS: Lesson[] = [
     ),
   },
   {
-    id: "parts",
+    id: LESSON_IDS.parts,
     title: "Parts of the trumpet",
     body: (
       <>
@@ -80,7 +93,7 @@ const LESSONS: Lesson[] = [
     ),
   },
   {
-    id: "care",
+    id: LESSON_IDS.care,
     title: "Care, cleaning & valve oil",
     body: (
       <>
@@ -116,7 +129,7 @@ const LESSONS: Lesson[] = [
     ),
   },
   {
-    id: "hold",
+    id: LESSON_IDS.hold,
     title: "How to hold the trumpet",
     body: (
       <>
@@ -147,7 +160,7 @@ const LESSONS: Lesson[] = [
     ),
   },
   {
-    id: "mouthpiece",
+    id: LESSON_IDS.mouthpiece,
     title: "The mouthpiece & embouchure",
     body: (
       <>
@@ -178,7 +191,7 @@ const LESSONS: Lesson[] = [
     ),
   },
   {
-    id: "breathing",
+    id: LESSON_IDS.breathing,
     title: "Breathing & air support",
     body: (
       <>
@@ -205,7 +218,7 @@ const LESSONS: Lesson[] = [
     ),
   },
   {
-    id: "first-note",
+    id: LESSON_IDS.firstNote,
     title: "Your first note & fingerings",
     body: (
       <>
@@ -251,7 +264,7 @@ const LESSONS: Lesson[] = [
     ),
   },
   {
-    id: "tonguing",
+    id: LESSON_IDS.tonguing,
     title: "Tonguing, rhythm & tuning",
     body: (
       <>
@@ -289,7 +302,7 @@ const LESSONS: Lesson[] = [
     ),
   },
   {
-    id: "practice",
+    id: LESSON_IDS.practice,
     title: "Practice tips & next steps",
     body: (
       <>
@@ -317,6 +330,76 @@ const LESSONS: Lesson[] = [
 ];
 
 export default function Lessons() {
+  const { lessonId } = useParams();
+  const lessonIndex = LESSONS.findIndex((lesson) => lesson.id === lessonId);
+
+  if (lessonId && lessonIndex < 0) {
+    return (
+      <main className="container lesson-not-found">
+        <span className="eyebrow">The course</span>
+        <h1>Lesson not found</h1>
+        <p>That lesson link may be out of date.</p>
+        <Link to="/lessons" className="btn btn-primary">
+          Browse all lessons
+        </Link>
+      </main>
+    );
+  }
+
+  if (lessonId) {
+    const lesson = LESSONS[lessonIndex];
+    const previousLesson = LESSONS[lessonIndex - 1];
+    const nextLesson = LESSONS[lessonIndex + 1];
+
+    return (
+      <main className="container lesson-page">
+        <div className="lesson-page-inner">
+          <Link to="/lessons" className="lesson-back-link">
+            ← All lessons
+          </Link>
+          <header className="lesson-page-heading">
+            <span className="eyebrow">
+              Lesson {lessonIndex + 1} of {LESSONS.length}
+            </span>
+            <h1>{lesson.title}</h1>
+          </header>
+          <motion.article
+            className="lesson lesson-detail"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, ease: "easeOut" as const }}
+          >
+            {lesson.body}
+          </motion.article>
+          <nav className="lesson-pagination" aria-label="Lesson navigation">
+            {previousLesson ? (
+              <Link
+                to={`/lessons/${previousLesson.id}`}
+                className="lesson-pagination-link previous"
+              >
+                <span>← Previous</span>
+                <strong>{previousLesson.title}</strong>
+              </Link>
+            ) : (
+              <span />
+            )}
+            {nextLesson ? (
+              <Link
+                to={`/lessons/${nextLesson.id}`}
+                className="lesson-pagination-link next"
+              >
+                <span>Next →</span>
+                <strong>{nextLesson.title}</strong>
+              </Link>
+            ) : (
+              <span />
+            )}
+          </nav>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main>
       <div className="container">
@@ -332,33 +415,24 @@ export default function Lessons() {
           </p>
         </div>
 
-        <div className="lesson-layout">
-          <aside className="lesson-toc">
-            {LESSONS.map((l, i) => (
-              <a key={l.id} href={`#${l.id}`}>
-                {i + 1}. {l.title}
-              </a>
-            ))}
-          </aside>
-
-          <div>
-            {LESSONS.map((l, i) => (
-              <motion.article
-                key={l.id}
-                id={l.id}
-                className="lesson"
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.5, ease: "easeOut" as const }}
+        <ol className="lesson-index-list">
+          {LESSONS.map((lesson, i) => (
+            <li key={lesson.id}>
+              <Link
+                to={`/lessons/${lesson.id}`}
+                className="lesson-index-link"
               >
-                <span className="step-num">{i + 1}</span>
-                <h2>{l.title}</h2>
-                {l.body}
-              </motion.article>
-            ))}
-          </div>
-        </div>
+                <span className="lesson-index-number" aria-hidden="true">
+                  {i + 1}
+                </span>
+                <span className="lesson-index-title">{lesson.title}</span>
+                <span className="lesson-index-arrow" aria-hidden="true">
+                  →
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ol>
       </div>
     </main>
   );

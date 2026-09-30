@@ -110,7 +110,7 @@ export default function Home() {
                 <h2 style={{ fontSize: "1.5rem" }}>Playground controls</h2>
                 <p style={{ marginTop: 8 }}>
                   These unique combinations keep every note playable in the
-                  browser. See <Link to="/lessons#first-note">Lesson 7</Link>{" "}
+                  browser. See <Link to="/lessons/first-note">Lesson 7</Link>{" "}
                   for real trumpet fingerings, where several notes share the
                   same valve position.
                 </p>

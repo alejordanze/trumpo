@@ -598,56 +598,136 @@ h3 {
   max-width: 620px;
   margin-top: 18px;
 }
-.lesson-layout {
+.lesson-index-list {
   display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 48px;
-  align-items: start;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0 0 72px;
+  list-style: none;
 }
-.lesson-toc {
-  position: sticky;
-  top: 90px;
+.lesson-index-link {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.lesson-toc a {
-  padding: 8px 12px;
-  border-radius: 8px;
-  color: var(--muted);
-  font-size: 0.92rem;
-  border-left: 2px solid transparent;
-  transition:
-    color 0.15s ease,
-    border-color 0.15s ease;
-}
-.lesson-toc a:hover {
+  align-items: center;
+  gap: 16px;
+  min-height: 82px;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: linear-gradient(180deg, var(--bg-card), var(--bg-elev));
   color: var(--text);
-  border-left-color: var(--gold-deep);
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease;
+}
+.lesson-index-link:hover {
+  transform: translateY(-2px);
+  border-color: rgba(245, 197, 66, 0.5);
+}
+.lesson-index-link:focus-visible,
+.lesson-pagination-link:focus-visible,
+.lesson-back-link:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 3px;
+}
+.lesson-index-number {
+  display: grid;
+  flex: 0 0 38px;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(245, 197, 66, 0.12);
+  color: var(--gold-bright);
+  font-weight: 800;
+}
+.lesson-index-title {
+  flex: 1;
+  font-weight: 700;
+}
+.lesson-index-arrow {
+  color: var(--gold-bright);
+  font-size: 1.2rem;
+}
+.lesson-page {
+  padding-top: 34px;
+  padding-bottom: 80px;
+}
+.lesson-page-inner {
+  max-width: 820px;
+  margin: 0 auto;
+}
+.lesson-back-link {
+  display: inline-block;
+  margin-bottom: 22px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.lesson-back-link:hover {
+  color: var(--gold-bright);
+}
+.lesson-page-heading {
+  padding: 8px 0 18px;
+}
+.lesson-page-heading h1,
+.lesson-not-found h1 {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 900;
+}
+.lesson-page-heading .eyebrow {
+  margin-bottom: 12px;
+}
+.lesson-detail {
+  padding: 28px 0 40px;
+  border-top: 1px solid var(--border);
+}
+.lesson-pagination {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 26px;
+}
+.lesson-pagination-link {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 48%;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elev);
+  transition: border-color 0.15s ease;
+}
+.lesson-pagination-link:hover {
+  border-color: var(--gold-deep);
+}
+.lesson-pagination-link span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+.lesson-pagination-link strong {
+  color: var(--text);
+}
+.lesson-pagination-link.next {
+  margin-left: auto;
+  text-align: right;
+}
+.lesson-not-found {
+  padding-top: 96px;
+  padding-bottom: 120px;
+}
+.lesson-not-found .eyebrow {
+  display: block;
+}
+.lesson-not-found p {
+  margin: 16px 0 24px;
+  color: var(--muted);
 }
 .lesson {
   padding: 36px 0;
   border-top: 1px solid var(--border);
   scroll-margin-top: 90px;
-}
-.lesson:first-child {
-  border-top: none;
-}
-.lesson .step-num {
-  display: inline-grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba(245, 197, 66, 0.12);
-  color: var(--gold-bright);
-  font-weight: 800;
-  margin-bottom: 16px;
-}
-.lesson h2 {
-  font-size: 1.7rem;
-  font-weight: 800;
-  margin-bottom: 14px;
 }
 .lesson p {
   color: var(--muted);
@@ -1147,12 +1227,6 @@ h3 {
   .player {
     grid-template-columns: 1fr;
   }
-  .lesson-layout {
-    grid-template-columns: 1fr;
-  }
-  .lesson-toc {
-    display: none;
-  }
   .parts-grid {
     grid-template-columns: 1fr;
   }
@@ -1165,6 +1239,22 @@ h3 {
 }
 
 @media (max-width: 560px) {
+  .lesson-index-list {
+    grid-template-columns: 1fr;
+    padding-bottom: 52px;
+  }
+  .lesson-page {
+    padding-top: 26px;
+  }
+  .lesson-pagination {
+    gap: 10px;
+  }
+  .lesson-pagination-link {
+    padding: 14px 12px;
+  }
+  .lesson-pagination-link strong {
+    font-size: 0.9rem;
+  }
   .nav-inner {
     padding-left: 14px;
     padding-right: 14px;
