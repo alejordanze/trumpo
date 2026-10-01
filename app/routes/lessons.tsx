@@ -7,33 +7,40 @@ import { ClientOnly } from "~/components/ClientOnly";
 import { Trumpet3D } from "~/components/Trumpet3D";
 import { LESSON_IDS } from "~/lib/lessonIds";
 import { NoteName } from "~/lib/notation";
+import { pageMeta, SITE_NAME } from "~/lib/seo";
 
 export function meta({ params }: Route.MetaArgs) {
   const lesson = LESSONS.find((item) => item.id === params.lessonId);
 
   if (lesson) {
-    return [
-      { title: `${lesson.title} — Trumpo` },
-      {
-        name: "description",
-        content: `Lesson: ${lesson.title}. Learn trumpet step by step with Trumpo.`,
-      },
-    ];
+    return pageMeta({
+      title: `${lesson.title} — ${SITE_NAME}`,
+      description: lesson.description,
+      path: `/lessons/${lesson.id}`,
+    });
   }
 
-  return [
-    { title: "Lessons — Trumpo" },
-    {
-      name: "description",
-      content:
-        "Learn to play the trumpet from scratch: requirements, parts, care, posture, embouchure, breathing, first notes, tonguing, rhythm and practice.",
-    },
-  ];
+  if (params.lessonId) {
+    return pageMeta({
+      title: `Lesson not found — ${SITE_NAME}`,
+      description: "That lesson could not be found. Browse all Trumpo lessons.",
+      path: "/lessons",
+      noindex: true,
+    });
+  }
+
+  return pageMeta({
+    title: `Trumpet lessons — ${SITE_NAME}`,
+    description:
+      "Learn the trumpet step by step with Trumpo's beginner lessons on parts, care, breathing, fingerings, and practice.",
+    path: "/lessons",
+  });
 }
 
 interface Lesson {
   id: string;
   title: string;
+  description: string;
   body: React.ReactNode;
 }
 
@@ -41,6 +48,8 @@ const LESSONS: Lesson[] = [
   {
     id: LESSON_IDS.requirements,
     title: "What you'll need",
+    description:
+      "Find out what you need to start learning the trumpet, from a mouthpiece and valve oil to a steady practice routine.",
     body: (
       <>
         <p>
@@ -73,6 +82,8 @@ const LESSONS: Lesson[] = [
   {
     id: LESSON_IDS.parts,
     title: "Parts of the trumpet",
+    description:
+      "Explore the parts of a trumpet with an interactive 3D model and learn what each piece does.",
     body: (
       <>
         <p>
@@ -95,6 +106,8 @@ const LESSONS: Lesson[] = [
   {
     id: LESSON_IDS.care,
     title: "Care, cleaning & valve oil",
+    description:
+      "Learn simple ways to clean your trumpet, oil its valves, and keep it ready to play.",
     body: (
       <>
         <p>
@@ -131,6 +144,8 @@ const LESSONS: Lesson[] = [
   {
     id: LESSON_IDS.hold,
     title: "How to hold the trumpet",
+    description:
+      "Get comfortable with trumpet posture, hand placement, and how to hold your instrument.",
     body: (
       <>
         <p>
@@ -162,6 +177,8 @@ const LESSONS: Lesson[] = [
   {
     id: LESSON_IDS.mouthpiece,
     title: "The mouthpiece & embouchure",
+    description:
+      "Learn how the mouthpiece and embouchure work, and try your first steady buzz.",
     body: (
       <>
         <p>
@@ -193,6 +210,8 @@ const LESSONS: Lesson[] = [
   {
     id: LESSON_IDS.breathing,
     title: "Breathing & air support",
+    description:
+      "Build steady airflow with simple breathing exercises for your first trumpet notes.",
     body: (
       <>
         <p>
@@ -220,6 +239,8 @@ const LESSONS: Lesson[] = [
   {
     id: LESSON_IDS.firstNote,
     title: "Your first note & fingerings",
+    description:
+      "Play your first trumpet note and learn how valve combinations make different pitches.",
     body: (
       <>
         <p>
@@ -266,6 +287,8 @@ const LESSONS: Lesson[] = [
   {
     id: LESSON_IDS.tonguing,
     title: "Tonguing, rhythm & tuning",
+    description:
+      "Practice clean note starts, rhythm, and tuning with simple trumpet exercises.",
     body: (
       <>
         <p>
@@ -304,6 +327,8 @@ const LESSONS: Lesson[] = [
   {
     id: LESSON_IDS.practice,
     title: "Practice tips & next steps",
+    description:
+      "Put your new skills into a short practice routine and plan what to learn next.",
     body: (
       <>
         <ul>

@@ -12,8 +12,10 @@ import "./app.css";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import { NotationProvider } from "./lib/notation";
+import { SITE_NAME } from "./lib/seo";
 
 export const links: Route.LinksFunction = () => [
+  { rel: "icon", href: "/favicon.ico", sizes: "any" },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
@@ -32,6 +34,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="application-name" content={SITE_NAME} />
+        <meta name="theme-color" content="#0b0b0d" />
         <Meta />
         <Links />
       </head>

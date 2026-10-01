@@ -1,6 +1,7 @@
 import { NavLink } from "react-router";
 import { NotationSwitch } from "./NotationSwitch";
 import { Logo } from "~/icons/Logo";
+import { SITE_NAME } from "~/lib/seo";
 
 export function Navbar() {
   return (
@@ -8,7 +9,7 @@ export function Navbar() {
       <div className="container nav-inner">
         <NavLink to="/" className="brand">
           <Logo />
-          <span>Trumpo</span>
+          <span>{SITE_NAME}</span>
         </NavLink>
         <div className="nav-actions">
           <div className="nav-links">
