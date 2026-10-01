@@ -5,16 +5,15 @@ import { Hero } from "~/components/Hero";
 import { Section } from "~/components/Section";
 import { PlayableTrumpet, FingeringGuide } from "~/components/PlayableTrumpet";
 import { NoteName } from "~/lib/notation";
+import { pageMeta, SITE_NAME } from "~/lib/seo";
 
 export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "Trumpo — Learn to play the trumpet" },
-    {
-      name: "description",
-      content:
-        "An interactive, animated playground and step-by-step course for learning the trumpet from scratch.",
-    },
-  ];
+  return pageMeta({
+    title: `${SITE_NAME} — Learn the trumpet online`,
+    description:
+      "Explore an interactive 3D trumpet, play notes in your browser, and follow beginner lessons with Trumpo.",
+    path: "/",
+  });
 }
 
 const FEATURES = [
